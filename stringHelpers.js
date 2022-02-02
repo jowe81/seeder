@@ -30,19 +30,6 @@ const generateRandomString = (length = 6) => {
   return str;
 };
 
-//Generate random ID with length
-const generateID = (length) => {
-  return generateRandomString(length || constants.ID_LENGTH);
-};
-
-const generateUserID = () => {
-  return generateID(constants.USERID_LENGTH);
-};
-
-const generateSessionID = () => {
-  return generateID(constants.SESSIONID_LENGTH);
-};
-
 //Basic email string validity check (returns true or false)
 const isValidEmail = (email) => {
   //Requires:
@@ -88,9 +75,6 @@ const verifyURL = (url) => {
 
 module.exports = {
   generateRandomString,
-  generateID,
-  generateUserID,
-  generateSessionID,
   isValidEmail,
   emailExists,
   verifyURL,

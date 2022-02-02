@@ -2,6 +2,10 @@
 //  database and seeding helpers
 
 const fs = require('fs');
+const helpers = require('./stringHelpers');
+
+const DEFAULT_VARCHAR_LENGTH = 100;
+const DEFAULT_MAX_VALUE = 1000;
 
 /**
  * Return a comma seperated list of property names
@@ -113,14 +117,14 @@ const getInsertQuery = (object, tableName, returnRecord = true) => {
 
 /**
  * Generate a seed file
- * @param {*} tableName Name of the table 
- * @param {*} columns Object with column information
- * @param {*} noRecords # of records to write to seed file
- * @param {*} path Where to save the file
- * @param {*} createStatement optional: create table statement to be inserted at the top
- * @returns 
+ * @param {String} tableName Name of the table
+ * @param {Object} columns Object with column information
+ * @param {Number} noRecords # of records to write to seed file
+ * @param {String} path Where to save the file
+ * @param {String} createStatement optional: create table statement to be inserted at the top
  */
-const writeSeedFile = (tableName, columns, noRecords = 200, path = './', createStatement) => {
+const writeSeedFile = (tableName, columns, noRecords = 200, path = './output/', createStatement) => {
+  const outputFile = path + tableName + '.sql';
   let data = '';
   if (createStatement) {
     data += createStatement;
@@ -129,13 +133,10 @@ const writeSeedFile = (tableName, columns, noRecords = 200, path = './', createS
     data += getSeedRecord(columns, tableName);
     data += '\n';
   }
-  fs.writeFileSync(path + tableName + '.sql', data);
+  console.log(`Writing seed file ${outputFile} with ${noRecords} records.`);
+  fs.writeFileSync(outputFile, data);
 };
 
-const DEFAULT_VARCHAR_LENGTH = 100;
-const DEFAULT_MAX_VALUE = 1000;
-
-const helpers = require('./helpers');
 
 /**
  * Make a function that generates a random name
@@ -190,24 +191,31 @@ const getSeedRecord = (columns, tableName) => {
     let value;
     switch (columns[colname].type.toLowerCase()) {
     case 'varchar':
+      //A random sequence of characters
       value = helpers.generateRandomString(columns[colname].length || DEFAULT_VARCHAR_LENGTH);
       break;
     case 'name':
+      //A random name (first and last)
       value = getName();
       break;
     case 'words':
+      //one or more random words
       value = getWords(columns[colname].length || 1);
       break;
     case 'boolean':
+      //true or false
       value = Math.random() > .5;
       break;
     case 'integer':
+      //An integer with a given max value
       value = Math.round(Math.random() * (columns[colname].max || DEFAULT_MAX_VALUE));
       break;
     case 'float':
+      //A float with a given max value
       value = Math.random() * (columns[colname].max || DEFAULT_MAX_VALUE);
       break;
     case 'date':
+      //implement
       break;
     default:
       value = null;
