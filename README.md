@@ -7,7 +7,7 @@ cd ./seeder
 npm install
 ```
 ## Configure:
-Specify tables and options in ```run.js```
+Specify tables and options in ```config.json```
 
 ## Run
 ```bash
