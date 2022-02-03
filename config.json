@@ -1,0 +1,34 @@
+[
+  {
+    "name": "users",
+    "columns": {
+      "name": { "type": "name", "length": 30 }
+    },
+    "no_records": 10
+  },
+  {
+    "name": "quizzes",
+    "columns": {
+      "title": { "type": "words", "length": 5 },
+      "user_id": { "type": "integer", "max": 100 }        
+    },
+    "noRecords": 100
+  },
+  {
+    "name": "questions",
+    "columns": {
+      "quiz_id": { "type": "integer", "max": 200 },
+      "question_string" : {"type": "words", "length": 8 }      
+    },
+    "noRecords": 2000
+  },
+  {
+    "name": "options",
+    "columns": {
+      "question_id": { "type": "integer", "max": 200 },
+      "content" : {"type": "words", "length": 3 },
+      "is_correct" : {"type": "boolean"}      
+    },
+    "noRecords": 20000
+  }
+]
