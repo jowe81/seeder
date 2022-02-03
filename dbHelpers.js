@@ -201,6 +201,10 @@ const getSeedRecord = (columns, tableName) => {
     case 'words':
       //one or more random words
       value = getWords(columns[colname].length || 1);
+      //add appendix
+      if (columns[colname].appendix) {
+        value += columns[colname].appendix;
+      }
       break;
     case 'boolean':
       //true or false
